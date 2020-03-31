@@ -3,6 +3,7 @@ module github.com/SergeyDavidenko/subscription
 go 1.13
 
 require (
+	github.com/SergeyDavidenko/auth v0.0.0-20200331083411-8bd17c90c202
 	github.com/gin-gonic/gin v1.6.1
 	github.com/go-redis/redis v6.15.7+incompatible
 	github.com/google/uuid v1.1.1

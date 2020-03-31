@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 
+	"github.com/SergeyDavidenko/auth/client"
 	"github.com/SergeyDavidenko/subscription/config"
 	"github.com/SergeyDavidenko/subscription/db"
 	"github.com/gin-gonic/gin"
@@ -29,6 +30,16 @@ func authMiddleware() gin.HandlerFunc {
 					"code":    http.StatusInternalServerError,
 					"message": errValid.Error(),
 				})
+				return
+			}
+		} else {
+			valid, errAuthValid := client.AuthCheck(config.Conf.Auth.URL, token)
+			if errAuthValid != nil {
+				respondWithError(http.StatusUnauthorized, errAuthValid, c)
+				return
+			}
+			if !valid {
+				respondWithError(http.StatusUnauthorized, "token not valid", c)
 				return
 			}
 		}

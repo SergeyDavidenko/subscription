@@ -28,4 +28,4 @@ postgresql:
   max_connections: 20
   log_level: "warning"
 auth:
-  url: "http://localhost:8080"
+  url: "http://localhost:8080/api/valid"
