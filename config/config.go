@@ -12,18 +12,36 @@ import (
 
 var defaultConf = []byte(`
 core:
-  environment: "dev"
-  lable: "auth-service"
+  environment: "staging"
+  lable: "subscription"
 api:
-  port: ":8088"
-  health_port: ":1488"
+  port: 8081
+  health_port: 1488
+  pprof_port: 6061
   metric_uri: "/metrics"
   health_uri: "/healthz"
+  cokies_name: "TOKEN"
+  cokies_domain: "localhost"
+  token_expire_minutes: 60
+  user_redis_cache: true
+redis:
+  use_redis: true
+  address: "localhost"
+  port: 6379
 log:
   level: "info"
-key:
-  pub: "keys/app.rsa.pub"
-  private: "keys/app.rsa"
+  disable_colors: false
+  full_timestamp: true
+postgresql:
+  address: "localhost"
+  port: 5432
+  database: "go-subscription"
+  username: "go"
+  password: "secret"
+  max_connections: 20
+  log_level: "warning"
+auth:
+  url: "http://localhost:8080"
 `)
 
 var (

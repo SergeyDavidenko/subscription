@@ -22,13 +22,15 @@ func authMiddleware() gin.HandlerFunc {
 			})
 			return
 		}
-		errValid := db.Client.CheckKey(token)
-		if errValid != nil {
-			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-				"code":    http.StatusInternalServerError,
-				"message": errValid.Error(),
-			})
-			return
+		if config.Conf.Redis.UseRedis {
+			errValid := db.Client.CheckKey(token)
+			if errValid != nil {
+				c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+					"code":    http.StatusInternalServerError,
+					"message": errValid.Error(),
+				})
+				return
+			}
 		}
 		c.Next()
 	}
