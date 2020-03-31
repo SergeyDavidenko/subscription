@@ -22,7 +22,7 @@ log:
 postgresql:
   address: "localhost"
   port: 5432
-  database: "go-auth"
+  database: "go-subscription"
   username: "go"
   password: "secret"
   max_connections: 20
