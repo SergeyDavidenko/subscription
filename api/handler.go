@@ -35,7 +35,7 @@ func authMiddleware() gin.HandlerFunc {
 		} else {
 			valid, errAuthValid := client.AuthCheck(config.Conf.Auth.URL, token)
 			if errAuthValid != nil {
-				respondWithError(http.StatusUnauthorized, errAuthValid, c)
+				respondWithError(http.StatusUnauthorized, errAuthValid.Error(), c)
 				return
 			}
 			if !valid {
