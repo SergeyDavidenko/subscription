@@ -2,6 +2,7 @@ package buss
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/SergeyDavidenko/subscription/config"
 	"github.com/SergeyDavidenko/subscription/models"
@@ -37,7 +38,7 @@ func RunKafkaConsumer(consumer *kafka.Consumer) {
 	for {
 		msg, err := consumer.ReadMessage(-1)
 		if err == nil {
-			//log.Info(fmt.Sprintf("Message on %s: %s\n", msg.TopicPartition, string(msg.Value)))
+			log.Debug(fmt.Sprintf("Message on %s: %s\n", msg.TopicPartition, string(msg.Value)))
 			if errJSON := json.Unmarshal(msg.Value, &sub); errJSON != nil {
 				log.Error(errJSON)
 			}
