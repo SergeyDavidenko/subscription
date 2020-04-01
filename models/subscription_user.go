@@ -13,6 +13,12 @@ type Login struct {
 	Password string `json:"password"`
 }
 
+// KafkaSubscriptionUser ...
+type KafkaSubscriptionUser struct {
+	Action           string           `json:"action"`
+	UserSubscription SubscriptionUser `json:"subscription"`
+}
+
 // SubscriptionUser ...
 type SubscriptionUser struct {
 	ID               string `json:"id"`
@@ -56,7 +62,6 @@ func (s *SubscriptionUser) CreateSubscriptionUserOnDB() error {
 	}
 	return nil
 }
-
 
 // UpdateSubscriptionUserOnDB ...
 func (s *SubscriptionUser) UpdateSubscriptionUserOnDB() error {

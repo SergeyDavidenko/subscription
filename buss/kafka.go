@@ -34,7 +34,7 @@ func RunKafkaConsumer(consumer *kafka.Consumer) {
 	consumer.SubscribeTopics([]string{config.Conf.Kafka.Topic}, nil)
 	log.Info("Start kafka consumer on topic ", config.Conf.Kafka.Topic)
 	defer consumer.Close()
-	var sub models.SubscriptionUser
+	var sub models.KafkaSubscriptionUser
 	for {
 		msg, err := consumer.ReadMessage(-1)
 		if err == nil {
@@ -42,9 +42,15 @@ func RunKafkaConsumer(consumer *kafka.Consumer) {
 			if errJSON := json.Unmarshal(msg.Value, &sub); errJSON != nil {
 				log.Error(errJSON)
 			}
-			errCreateSub := sub.CreateSubscriptionUserOnDB()
-			if errCreateSub != nil {
-				log.Error(errCreateSub)
+			switch action := sub.Action; action {
+			case "create":
+				log.Debug("Create action on kafka")
+				errCreateSub := sub.UserSubscription.CreateSubscriptionUserOnDB()
+				if errCreateSub != nil {
+					log.Error(errCreateSub)
+				}
+			default:
+				log.Error("bad action")
 			}
 			log.Info(sub)
 		} else {
