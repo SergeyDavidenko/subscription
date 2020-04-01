@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"github.com/SergeyDavidenko/subscription/buss"
 	"github.com/SergeyDavidenko/subscription/config"
 	"github.com/SergeyDavidenko/subscription/db"
 	log "github.com/sirupsen/logrus"
@@ -41,5 +42,15 @@ func InitServer(configPath string) {
 			log.Warn("Redis port not set use default port 6379")
 		}
 		db.RedisInitialize()
+	}
+	if config.Conf.Kafka.UseKafka {
+		if config.Conf.Kafka.Address == "" {
+			log.Fatal("Kafka address not set on config")
+		}
+		if config.Conf.Kafka.Topic == "" {
+			log.Fatal("Kafka topic not set on config")
+		}
+		kafkaConnect := buss.KafkaConnect()
+		go buss.RunKafkaConsumer(kafkaConnect)
 	}
 }

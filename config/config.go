@@ -40,8 +40,12 @@ postgresql:
   password: "secret"
   max_connections: 20
   log_level: "warning"
+kafka:
+  use_kafka: true
+  address: "localhost"
+  topic: "test.sub.go"
 auth:
-  url: "http://localhost:8080"
+  url: "http://localhost:8080/api/valid"
 `)
 
 var (
@@ -59,6 +63,7 @@ type ConfYaml struct {
 	Redis      SectionRedis      `yaml:"redis"`
 	PostgreSQL SectionPostgreSQL `yaml:"postgresql"`
 	Auth       SectionAuth       `yaml:"auth"`
+	Kafka      SectionKafka      `yaml:"kafka"`
 }
 
 // SectionCore is sub section of config.
@@ -95,6 +100,13 @@ type SectionRedis struct {
 	UseRedis bool   `yaml:"use_redis"`
 	Address  string `yaml:"address"`
 	Port     int    `yaml:"port"`
+}
+
+// SectionKafka is sub section of config.
+type SectionKafka struct {
+	UseKafka bool   `yaml:"use_kafka"`
+	Address  string `yaml:"address"`
+	Topic    string `yaml:"topic"`
 }
 
 // SectionPostgreSQL is sub section of config.
@@ -174,6 +186,11 @@ func LoadConf(confPath string) (ConfYaml, error) {
 	conf.Redis.Address = viper.GetString("redis.address")
 	conf.Redis.Port = viper.GetInt("redis.port")
 	conf.Redis.UseRedis = viper.GetBool("redis.use_redis")
+
+	//Kafka
+	conf.Kafka.Address = viper.GetString("kafka.address")
+	conf.Kafka.Topic = viper.GetString("kafka.topic")
+	conf.Kafka.UseKafka = viper.GetBool("kafka.use_kafka")
 
 	//Key
 	conf.Auth.URL = viper.GetString("auth.url")

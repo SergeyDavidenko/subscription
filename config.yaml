@@ -27,5 +27,9 @@ postgresql:
   password: "secret"
   max_connections: 20
   log_level: "warning"
+kafka:
+  use_kafka: true
+  address: "localhost"
+  topic: "test.sub.go"
 auth:
   url: "http://localhost:8080/api/valid"

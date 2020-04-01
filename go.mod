@@ -13,9 +13,11 @@ require (
 	github.com/jackc/pgx/v4 v4.5.0
 	github.com/onsi/ginkgo v1.12.0 // indirect
 	github.com/onsi/gomega v1.9.0 // indirect
+	github.com/rs/zerolog v1.15.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.5.0
 	github.com/spf13/viper v1.6.2
 	github.com/toorop/gin-logrus v0.0.0-20190701131413-6c374ad36b67
 	github.com/zsais/go-gin-prometheus v0.1.0
+	gopkg.in/confluentinc/confluent-kafka-go.v1 v1.1.0
 )
