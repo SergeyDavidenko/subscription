@@ -49,6 +49,12 @@ func RunKafkaConsumer(consumer *kafka.Consumer) {
 				if errCreateSub != nil {
 					log.Error(errCreateSub)
 				}
+			case "update":
+				log.Debug("Update action on kafka")
+				errUpdateSub := sub.UserSubscription.UpdateSubscriptionUserOnDB()
+				if errUpdateSub != nil {
+					log.Error(errUpdateSub)
+				}
 			default:
 				log.Error("bad action")
 			}
